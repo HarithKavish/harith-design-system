@@ -1,0 +1,646 @@
+/**
+ * Harith Design System - Components
+ * Version: 1.0.0
+ * 
+ * Reusable UI components: Header/Footer (HarithShell), Buttons, Cards, Status Indicators, Chat Widget.
+ * Depends on tokens.css and base.css.
+ */
+/* ===================================
+   Buttons
+   =================================== */
+.portfolio-btn,
+.footer-btn,
+.connect-toggle-btn,
+.websites-toggle-btn {
+    flex: 0 1 auto;
+    min-width: 120px;
+    max-width: 220px;
+    margin: 0.3rem 0.2rem;
+    background: var(--btn-bg);
+    backdrop-filter: var(--blur-light);
+    -webkit-backdrop-filter: var(--blur-light);
+    color: var(--btn-color);
+    border: var(--btn-border);
+    padding: var(--btn-padding);
+    border-radius: var(--btn-radius);
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-medium);
+    text-decoration: none;
+    cursor: pointer;
+    transition: all var(--transition-slow);
+    box-shadow: var(--shadow-lg);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.portfolio-btn:hover,
+.footer-btn:hover,
+.connect-toggle-btn:hover,
+.websites-toggle-btn:hover {
+    background: var(--btn-hover-bg);
+    color: var(--btn-hover-color);
+    transform: translateY(-4px) scale(1.08);
+    border-color: var(--btn-hover-border);
+    box-shadow: var(--btn-hover-shadow);
+}
+
+body.dark-mode .footer-btn,
+body.dark-mode .portfolio-btn,
+body.dark-mode .connect-toggle-btn,
+body.dark-mode .websites-toggle-btn {
+    background: var(--btn-dark-bg);
+    color: var(--btn-dark-color);
+    border: var(--btn-dark-border);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+body.dark-mode .footer-btn:hover,
+body.dark-mode .portfolio-btn:hover,
+body.dark-mode .connect-toggle-btn:hover,
+body.dark-mode .websites-toggle-btn:hover {
+    background: var(--btn-dark-hover-bg);
+    color: var(--btn-dark-hover-color);
+    border-color: var(--btn-hover-border);
+    box-shadow: 0 12px 40px rgba(56, 189, 248, 0.3), 0 8px 16px rgba(0, 0, 0, 0.3);
+}
+
+.btn-icon {
+    vertical-align: middle;
+    margin-right: var(--btn-icon-margin);
+    border-radius: var(--btn-radius);
+    width: 18px;
+    height: 18px;
+    background: transparent;
+}
+
+.btn-icon.discord {
+    background: var(--color-discord);
+}
+
+/* External link indicator */
+.external-link-btn,
+.footer-btn {
+    position: relative;
+}
+
+.external-link-btn::before,
+.footer-btn::before {
+    content: '\2197';
+    /* Unicode for ↗ */
+    position: absolute;
+    right: 0.1em;
+    top: -0.4em;
+    font-size: 1.3em;
+    color: var(--color-primary);
+    opacity: 0;
+    transition: opacity var(--transition-base), color var(--transition-base);
+    pointer-events: none;
+    display: block;
+}
+
+.external-link-btn:hover::before,
+.external-link-btn:focus::before,
+.footer-btn:hover::before,
+.footer-btn:focus::before {
+    opacity: 1;
+}
+
+/* Toggle buttons with expand/collapse arrows */
+.connect-toggle-btn,
+.websites-toggle-btn {
+    position: relative;
+}
+
+.connect-toggle-btn::before,
+.websites-toggle-btn::before {
+    content: '>';
+    position: absolute;
+    left: 0.3em;
+    top: 50%;
+    font-size: 1.1em;
+    color: var(--color-primary);
+    opacity: 0;
+    transform: translateY(-50%) rotate(0deg);
+    transition: opacity var(--transition-base), color var(--transition-base), transform var(--transition-base);
+    pointer-events: none;
+    display: block;
+}
+
+.connect-toggle-btn:hover:not(.expanded)::before,
+.websites-toggle-btn:hover:not(.expanded)::before {
+    opacity: 1;
+}
+
+.connect-toggle-btn.expanded::before,
+.websites-toggle-btn.expanded::before {
+    content: '\2228';
+    /* Unicode for wide down arrow */
+    opacity: 0;
+}
+
+.connect-toggle-btn.expanded:hover::before,
+.websites-toggle-btn.expanded:hover::before {
+    content: '\2228';
+    opacity: 1;
+}
+
+/* ===================================
+   HarithShell - Shared Header
+   =================================== */
+.shared-header {
+    background: var(--shell-header-bg-light);
+    backdrop-filter: var(--blur-heavy);
+    -webkit-backdrop-filter: var(--blur-heavy);
+    border-bottom: var(--shell-border);
+    box-shadow: var(--shadow-lg);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: var(--z-fixed);
+    display: flex;
+    justify-content: center;
+    padding: 0.25rem 1.25rem;
+}
+
+body.dark-mode .shared-header {
+    background: var(--shell-header-bg-dark);
+    border-bottom: var(--shell-border-dark);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
+}
+
+.shared-header__inner {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0;
+}
+
+.shared-brand {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+}
+
+.shared-brand__name {
+    font-weight: var(--font-weight-semibold);
+    font-size: 1.4rem;
+    letter-spacing: 0.5px;
+    color: var(--color-text-primary);
+}
+
+body.dark-mode .shared-brand__name {
+    color: var(--color-text-primary-dark);
+}
+
+.shared-nav {
+    display: none;
+}
+
+.shared-nav-link {
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+    padding: 0.45rem 0.9rem;
+    border-radius: var(--radius-full);
+    background: rgba(255, 255, 255, 0.45);
+    color: var(--shell-nav-link-color);
+    border: none;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    transition: transform var(--transition-base), box-shadow var(--transition-base), background var(--transition-base);
+}
+
+.shared-nav-link:hover,
+.shared-nav-link:focus-visible {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 18px rgba(56, 189, 248, 0.25);
+    background: rgba(255, 255, 255, 0.7);
+    color: #111;
+}
+
+body.dark-mode .shared-nav-link {
+    background: rgba(255, 255, 255, 0.08);
+    color: var(--shell-nav-link-color-dark);
+}
+
+body.dark-mode .shared-nav-link:hover,
+body.dark-mode .shared-nav-link:focus-visible {
+    background: rgba(255, 255, 255, 0.16);
+    color: #fff;
+    box-shadow: 0 5px 16px rgba(0, 0, 0, 0.45);
+}
+
+.shared-header__actions {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+}
+
+/* Dark mode toggle button */
+#darkModeToggle,
+.theme-toggle {
+    background: rgba(255, 255, 255, 0.3);
+    backdrop-filter: var(--blur-light);
+    -webkit-backdrop-filter: var(--blur-light);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: var(--radius-full);
+    transition: all var(--transition-slow);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#darkModeToggle:hover,
+.theme-toggle:hover {
+    background: rgba(255, 255, 255, 0.5);
+    transform: scale(1.1) rotate(15deg);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+}
+
+body.dark-mode #darkModeToggle,
+body.dark-mode .theme-toggle {
+    background: rgba(50, 50, 50, 0.5);
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+body.dark-mode #darkModeToggle:hover,
+body.dark-mode .theme-toggle:hover {
+    background: rgba(70, 70, 70, 0.6);
+    box-shadow: 0 4px 16px rgba(255, 255, 255, 0.1);
+}
+
+/* Google Sign-In Button */
+.google-button-wrapper {
+    display: flex;
+    align-items: center;
+}
+
+.g_id_signin {
+    display: flex;
+}
+
+.signed-in-button {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(255, 255, 255, 0.6);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: var(--radius-full);
+    padding: 0.15rem 0.6rem;
+    font-weight: var(--font-weight-medium);
+    color: var(--shell-nav-link-color);
+    cursor: pointer;
+    transition: transform var(--transition-base), box-shadow var(--transition-base), background var(--transition-base);
+}
+
+.signed-in-button:hover,
+.signed-in-button:focus-visible {
+    background: rgba(255, 255, 255, 0.8);
+    transform: translateY(-1px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.signed-in-button__avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: var(--radius-full);
+    object-fit: cover;
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.6);
+}
+
+.signed-in-button__name {
+    display: inline-flex;
+    align-items: center;
+    font-size: var(--font-size-sm);
+    line-height: 1;
+}
+
+/* ===================================
+   HarithShell - Shared Footer
+   =================================== */
+.shared-footer {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: var(--shell-footer-bg-light);
+    backdrop-filter: var(--blur-heavy);
+    -webkit-backdrop-filter: var(--blur-heavy);
+    border-top: var(--shell-border);
+    box-shadow: 0 -8px 32px rgba(0, 0, 0, 0.12);
+    width: 100vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 0.75rem 1.2rem;
+    z-index: var(--z-fixed);
+}
+
+body.dark-mode .shared-footer {
+    background: var(--shell-footer-bg-dark);
+    border-top: var(--shell-border-dark);
+    box-shadow: 0 -8px 32px rgba(0, 0, 0, 0.35);
+}
+
+.shared-footer__inner {
+    width: min(1200px, 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.shared-footer__copy {
+    font-size: var(--font-size-sm);
+    color: #333;
+}
+
+body.dark-mode .shared-footer__copy {
+    color: var(--color-text-primary-dark);
+}
+
+.shared-footer__links {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+}
+
+.shared-footer__links a {
+    color: var(--color-primary);
+    font-weight: var(--font-weight-medium);
+    text-decoration: none;
+    transition: opacity var(--transition-base);
+}
+
+.shared-footer__links a:hover,
+.shared-footer__links a:focus-visible {
+    opacity: 0.75;
+}
+
+body.dark-mode .shared-footer__links a {
+    color: var(--color-primary-dark);
+}
+
+/* ===================================
+   Status Indicators
+   =================================== */
+.status-dot {
+    display: inline-block;
+    width: 0.7em;
+    height: 0.7em;
+    border-radius: var(--radius-full);
+    margin-right: 0.5em;
+    vertical-align: middle;
+    background: #bbb;
+    box-shadow: 0 0 0.2em rgba(0, 0, 0, 0.12);
+    transition: background var(--transition-base);
+}
+
+.status-dot.online {
+    background: var(--color-success);
+}
+
+.status-dot.offline {
+    background: var(--color-error);
+}
+
+.status-dot.unknown {
+    background: #bbb;
+}
+
+/* ===================================
+   Chat Widget - Floating Button & Modal
+   =================================== */
+.chat-button {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: var(--chat-button-size);
+    height: var(--chat-button-size);
+    border-radius: var(--radius-full);
+    background: var(--chat-gradient);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    backdrop-filter: var(--blur-light);
+    -webkit-backdrop-filter: var(--blur-light);
+    color: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: var(--chat-button-shadow);
+    transition: all var(--transition-slow);
+    z-index: calc(var(--z-fixed) + 1);
+}
+
+.chat-button:hover {
+    transform: scale(1.1);
+    box-shadow: 0 12px 40px rgba(102, 126, 234, 0.6);
+}
+
+.chat-button svg {
+    width: 28px;
+    height: 28px;
+}
+
+.chat-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: var(--z-modal);
+    align-items: center;
+    justify-content: center;
+    animation: fadeIn var(--transition-slow) ease;
+}
+
+.chat-modal.active {
+    display: flex;
+}
+
+.chat-modal-content {
+    width: 90%;
+    max-width: 900px;
+    height: 80vh;
+    max-height: 700px;
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: var(--blur-heavy);
+    -webkit-backdrop-filter: var(--blur-heavy);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    animation: slideUp var(--transition-slow) ease;
+}
+
+body.dark-mode .chat-modal-content {
+    background: rgba(30, 30, 30, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--color-text-primary-dark);
+}
+
+.chat-modal-header {
+    background: var(--chat-gradient);
+    color: white;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.chat-modal-header h3 {
+    margin: 0;
+    font-size: 24px;
+    color: #ffffff;
+}
+
+.close-chat-button {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 32px;
+    cursor: pointer;
+    padding: 0;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform var(--transition-base);
+}
+
+.close-chat-button:hover {
+    transform: scale(1.2);
+}
+
+#chatFrame {
+    flex: 1;
+    border: none;
+    width: 100%;
+}
+
+/* ===================================
+   Section Containers
+   =================================== */
+.footer-buttons {
+    margin: 1rem auto 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.3);
+    backdrop-filter: var(--blur-light);
+    -webkit-backdrop-filter: var(--blur-light);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+    transition: all var(--transition-slow);
+    position: relative;
+    z-index: var(--z-base);
+    padding: 0.5rem 1rem;
+}
+
+body.dark-mode .footer-buttons {
+    background: rgba(30, 30, 30, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+}
+
+.connect-hidden,
+.websites-hidden {
+    display: none !important;
+}
+
+.connect-hidden {
+    box-shadow: none !important;
+    background: transparent !important;
+}
+
+/* ===================================
+   Intro/Hero Section
+   =================================== */
+.intro {
+    margin-bottom: 1.5rem;
+    text-align: center;
+    max-width: 600px;
+}
+
+.tagline {
+    font-size: 1.3rem;
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text-primary);
+    margin: 0 0 0.5rem 0;
+}
+
+body.dark-mode .tagline {
+    color: var(--color-text-primary-dark);
+}
+
+.subtitle {
+    font-size: var(--font-size-base);
+    color: var(--color-text-secondary);
+    margin: 0;
+}
+
+body.dark-mode .subtitle {
+    color: var(--color-text-secondary-dark);
+}
+
+.center-buttons {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1.2rem;
+    margin: 2.5rem 0 1.5rem 0;
+}
+
+/* ===================================
+   Mobile Responsive
+   =================================== */
+@media (max-width: 768px) {
+    .chat-button {
+        width: 50px;
+        height: 50px;
+        bottom: 20px;
+        right: 20px;
+    }
+
+    .chat-button svg {
+        width: 24px;
+        height: 24px;
+    }
+
+    .chat-modal-content {
+        width: 95%;
+        height: 90vh;
+        max-height: none;
+    }
+
+    .chat-modal-header h3 {
+        font-size: 20px;
+    }
+
+    .shared-header {
+        padding: 0.15rem 0.75rem;
+    }
+
+    .shared-brand__name {
+        font-size: 1.2rem;
+    }
+}

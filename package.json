@@ -1,0 +1,34 @@
+{
+    "name": "@harithkavish/design-system",
+    "version": "1.0.0",
+    "description": "Harith Design System - Production-ready theme, components, and utilities for harithkavish.github.io projects",
+    "main": "v1.0.0/harith-theme.js",
+    "style": "v1.0.0/harith-theme.css",
+    "keywords": [
+        "design-system",
+        "css",
+        "theme",
+        "components",
+        "glassmorphism",
+        "dark-mode"
+    ],
+    "author": "Harith Kavish <harithkavish40@gmail.com>",
+    "license": "UNLICENSED",
+    "private": true,
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/HarithKavish/harithkavish.github.io.git"
+    },
+    "files": [
+        "v1.0.0/**",
+        "docs/**",
+        "examples/**",
+        "README.md",
+        "CHANGELOG.md"
+    ],
+    "scripts": {
+        "build": "echo 'Build script TBD: Minify CSS/JS'",
+        "test": "echo 'Test script TBD: Validate CSS/JS syntax'",
+        "docs": "echo 'Docs generation TBD'"
+    }
+}

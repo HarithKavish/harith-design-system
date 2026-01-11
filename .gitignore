@@ -1,0 +1,9 @@
+node_modules/
+dist/
+build/
+*.min.css
+*.min.js
+.DS_Store
+.env
+.env.local
+.cache
