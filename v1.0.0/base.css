@@ -5,12 +5,11 @@
  * Resets, typography, and foundational layout styles.
  * Depends on tokens.css for CSS variables.
  */
+
 /* ===================================
    CSS Reset & Base
    =================================== */
-*,
-*::before,
-*::after {
+*, *::before, *::after {
     box-sizing: border-box;
 }
 
@@ -39,228 +38,143 @@ body.dark-mode {
 }
 
 /* ===================================
+   Main Layout
+   =================================== */
+main {
+    width: 100%;
+    margin: 0 auto;
+    
+    /* Fixed Header/Footer Offsets */
+    padding-top: var(--header-height);
+    padding-bottom: var(--footer-height);
+    padding-left: var(--main-horizontal-padding);
+    padding-right: var(--main-horizontal-padding);
+    
+    /* Full Viewport Height to ensure centering and background coverage */
+    min-height: 100vh;
+    
+    /* Center Content */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    
+    background: transparent;
+}
+
+.main-center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+}
+
+/* ===================================
    Typography
    =================================== */
-h1,
-h2,
-h3,
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-}
-}
-
-padding-bottom: 3.5rem;
-padding-top: 3.5rem;
-
-main {}
-
---font-size-2xl: 1.375rem;
---font-size-3xl: 1.75rem;
---main-horizontal-padding: 1rem;
-
-:root {
-    @media (max-width: 768px) {
-        ===================================*/ Responsive
-        /* ===================================}    }        opacity: 1;        transform: translateY(0);    to {    }        opacity: 0;        transform: translateY(-50px);    from {@keyframes slideDown {}    }        opacity: 1;        transform: translateY(0);    to {    }        opacity: 0;        transform: translateY(50px);    from {@keyframes slideUp {}    }        opacity: 1;    to {    }        opacity: 0;    from {@keyframes fadeIn {   =================================== */
-        Animations
-        /* ===================================}    outline-color: var(--color-primary-dark);body.dark-mode :focus-visible {}    outline-offset: 2px;    outline: 2px solid var(--color-primary);:focus-visible {   =================================== */
-        Focus Styles
-        /* ===================================}    text-align: right;.text-right {}    text-align: left;.text-left {}    text-align: center;.text-center {}    border: 0;    white-space: nowrap;    clip: rect(0, 0, 0, 0);    overflow: hidden;    margin: -1px;    padding: 0;    height: 1px;    width: 1px;    position: absolute;.visually-hidden {   =================================== */
-        Utility Classes
-        /* ===================================}    height: 100%;    width: 100%;    justify-content: center;    align-items: center;    flex-direction: column;    display: flex;.main-center {}    background: transparent;    justify-content: center;    align-items: center;    flex-direction: column;    display: flex;    min-height: calc(100vh - var(--header-height) - var(--footer-height));    padding-right: var(--main-horizontal-padding);    padding-left: var(--main-horizontal-padding);    padding-bottom: var(--footer-height);    padding-top: var(--header-height);    margin: 0 auto;    width: 100%;    text-align: center;main {   =================================== */
-        Main Layout
-        /* ===================================}    color: var(--color-primary-dark);body.dark-mode a {}    opacity: 0.75;a:focus-visible {a:hover,}    transition: opacity var(--transition-base);    text-decoration: none;    color: var(--color-primary);a {}    color: var(--color-text-secondary-dark);body.dark-mode p {}    color: var(--color-text-secondary);    margin: 0 0 var(--spacing-md) 0;p {}    font-size: var(--font-size-lg);h4, h5, h6 {}    font-size: var(--font-size-xl);h3 {}    font-size: var(--font-size-2xl);h2 {}
-
-letter-spacing: 0.5px;
-font-size: var(--font-size-3xl);
-
-h1 {}
-
-color: var(--color-text-primary-dark);
-
-body.dark-mode h6 {
-    body.dark-mode h5,
-    body.dark-mode h4,
-    body.dark-mode h3,
-    body.dark-mode h2,
-    body.dark-mode h1,
-}
-
-color: var(--color-text-primary);
-line-height: var(--line-height-tight);
-font-weight: var(--font-weight-semibold);
-
-h4,
-h5,
-h6 {
+h1, h2, h3, h4, h5, h6 {
     margin: 0 0 var(--spacing-md) 0;
+    font-weight: var(--font-weight-semibold);
+    line-height: var(--line-height-tight);
+    color: var(--color-text-primary);
+}
+
+body.dark-mode h1,
+body.dark-mode h2,
+body.dark-mode h3,
+body.dark-mode h4,
+body.dark-mode h5,
+body.dark-mode h6 {
+    color: var(--color-text-primary-dark);
+}
+
+h1 { font-size: var(--font-size-3xl); letter-spacing: 0.5px; }
+h2 { font-size: var(--font-size-2xl); }
+h3 { font-size: var(--font-size-xl); }
+h4, h5, h6 { font-size: var(--font-size-lg); }
+
+p {
+    margin: 0 0 var(--spacing-md) 0;
+    color: var(--color-text-secondary);
+}
+
+body.dark-mode p {
+    color: var(--color-text-secondary-dark);
+}
+
+a {
+    color: var(--color-primary);
+    text-decoration: none;
+    transition: opacity var(--transition-base);
+}
+
+a:hover, a:focus-visible {
+    opacity: 0.75;
+}
+
+body.dark-mode a {
+    color: var(--color-primary-dark);
+}
+
+/* ===================================
+   Utility Classes
+   =================================== */
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+.text-center { text-align: center; }
+.text-left { text-align: left; }
+.text-right { text-align: right; }
+
+/* ===================================
+   Focus Styles
+   =================================== */
+:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+}
+
+body.dark-mode :focus-visible {
+    outline-color: var(--color-primary-dark);
+}
+
+/* ===================================
+   Animations
+   =================================== */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideUp {
+    from { transform: translateY(50px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes slideDown {
+    from { transform: translateY(-50px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+/* ===================================
+   Responsive
+   =================================== */
+@media (max-width: 768px) {
+    :root {
+        --main-horizontal-padding: 1rem;
+        --font-size-3xl: 1.75rem;
+        --font-size-2xl: 1.375rem;
+    }
+}
