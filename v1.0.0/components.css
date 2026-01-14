@@ -252,7 +252,10 @@ body.dark-mode .shared-nav-link:focus-visible {
     border: 1px solid rgba(255, 255, 255, 0.4);
     font-size: 1.5rem;
     cursor: pointer;
-    padding: 0.5rem;
+    /* padding: 0.5rem; -> removed to match explict height */
+    width: 44px;
+    /* 1.5rem + 1rem padding roughly, explicit for consistency */
+    height: 44px;
     border-radius: var(--radius-full);
     transition: all var(--transition-slow);
     display: flex;
@@ -292,58 +295,121 @@ body.dark-mode .theme-toggle:hover {
 .signed-in-button {
     display: flex;
     align-items: center;
-    /* gap removed for transition control */
+    justify-content: center;
     background: rgba(255, 255, 255, 0.6);
-    border: 1px solid rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.4);
     border-radius: var(--radius-full);
-    padding: 4px; /* Creates a circular button when text is hidden */
+    padding: 0;
+    width: 44px;
+    height: 44px;
     font-weight: var(--font-weight-medium);
     color: var(--shell-nav-link-color);
     cursor: pointer;
+    position: relative;
     transition: transform var(--transition-base), box-shadow var(--transition-base), background var(--transition-base);
 }
 
 .signed-in-button:hover,
-.signed-in-button:focus-visible {
+.signed-in-button:focus-visible,
+.signed-in-button.active {
     background: rgba(255, 255, 255, 0.8);
     transform: translateY(-1px);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .signed-in-button__avatar {
-    width: 32px;
-    height: 32px;
+    width: 100%;
+    height: 100%;
     border-radius: var(--radius-full);
     object-fit: cover;
-    display: block; /* Ensure no line-height gaps */
-    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.6);
+    display: block;
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.4);
 }
 
-.signed-in-button__name {
-    display: inline-block;
-    font-size: var(--font-size-sm);
-    line-height: 1;
-    
-    /* Hidden by default */
-    max-width: 0;
+/* Dropdown Menu Styles */
+.user-dropdown-menu {
+    position: absolute;
+    top: calc(100% + 0.5rem);
+    right: 0;
+    width: max-content;
+    min-width: 200px;
+    background: var(--shell-header-bg-light);
+    backdrop-filter: var(--blur-heavy);
+    -webkit-backdrop-filter: var(--blur-heavy);
+    border: var(--shell-border);
+    border-radius: var(--radius-md);
+    padding: 0.5rem;
+    box-shadow: var(--shadow-xl);
     opacity: 0;
-    overflow: hidden;
-    white-space: nowrap;
-    margin-left: 0;
-    transition: max-width 0.4s cubic-bezier(0.4, 0, 0.2, 1), 
-                opacity 0.3s ease, 
-                margin 0.4s cubic-bezier(0.4, 0, 0.2, 1),
-                padding 0.4s ease;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all var(--transition-base);
+    z-index: var(--z-dropdown);
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    pointer-events: none;
 }
 
-/* Reveal on hover or focus */
-.signed-in-button:hover .signed-in-button__name,
-.signed-in-button:focus-visible .signed-in-button__name {
-    max-width: 200px;
-    opacity: 1;
-    margin-left: 0.5rem;
-    padding-right: 0.5rem; /* Add visual padding on the right when expanded */
+body.dark-mode .user-dropdown-menu {
+    background: var(--shell-header-bg-dark);
+    border: var(--shell-border-dark);
 }
+
+.user-dropdown-menu.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
+.user-dropdown-header {
+    padding: 0.5rem;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    margin-bottom: 0.25rem;
+    font-size: var(--font-size-sm);
+    color: var(--shell-text-light);
+    text-align: left;
+}
+
+body.dark-mode .user-dropdown-header {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--shell-text-dark);
+}
+
+.user-dropdown-name {
+    font-weight: var(--font-weight-semibold);
+    display: block;
+}
+
+.user-dropdown-email {
+    font-size: var(--font-size-xs);
+    opacity: 0.8;
+    display: block;
+    margin-top: 2px;
+}
+
+.user-dropdown-action {
+    background: transparent;
+    border: none;
+    color: var(--color-error);
+    padding: 0.5rem;
+    border-radius: var(--radius-sm);
+    text-align: left;
+    cursor: pointer;
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+    transition: background var(--transition-fast);
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.user-dropdown-action:hover {
+    background: rgba(239, 68, 68, 0.1);
+}
+
 
 /* ===================================
    HarithShell - Shared Footer
