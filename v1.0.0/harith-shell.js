@@ -1,9 +1,10 @@
 /**
  * Harith Design System - HarithShell Components (Web Components)
- * Version: 1.1.0
+ * Version: 1.1.1
  * 
  * Defines <harith-header> and <harith-footer> Web Components.
  * Handles Theme Toggle and Google Sign-In internally.
+ * Dispatches 'harith-auth-change' event on login/logout.
  */
 
 (function () {
@@ -73,7 +74,7 @@
                 return `<a class="shared-nav-link" href="${link.href}">${link.label}</a>`;
             }).join('');
 
-            // Use Light DOM
+            // Use Light DOM so global CSS applies
             this.innerHTML = `
                 <header class="shared-header">
                     <div class="shared-header__inner">
@@ -128,6 +129,8 @@
                     const user = JSON.parse(stored);
                     if (user && user.name) {
                         this.renderUserProfile(container, user);
+                        // Emit initial state
+                        this.dispatchEvent(new CustomEvent('harith-auth-change', { detail: { user }, bubbles: true }));
                         return;
                     }
                 }
@@ -148,6 +151,8 @@
                                 };
                                 localStorage.setItem(GOOGLE_USER_KEY, JSON.stringify(user));
                                 this.renderUserProfile(container, user);
+                                // Emit success
+                                this.dispatchEvent(new CustomEvent('harith-auth-change', { detail: { user }, bubbles: true }));
                             }
                         }
                     });
@@ -162,7 +167,8 @@
 
         renderUserProfile(container, user) {
             const dropdownId = 'userProfileDropdown';
-            container.style.position = 'relative';
+            // Ensure container relative for dropdown positioning if needed
+             container.style.position = 'relative';
 
             container.innerHTML = `
                 <button type="button" class="signed-in-button" aria-label="Signed in as ${user.name}" aria-expanded="false" aria-controls="${dropdownId}">
@@ -178,6 +184,7 @@
                 </div>
             `;
 
+            // Inject Dropdown Styles if not present (simple check)
             this.injectStyles();
 
             const btn = container.querySelector('.signed-in-button');
@@ -208,6 +215,7 @@
 
             logout.onclick = () => {
                 localStorage.removeItem(GOOGLE_USER_KEY);
+                this.dispatchEvent(new CustomEvent('harith-auth-change', { detail: { user: null }, bubbles: true }));
                 location.reload();
             };
         }
@@ -289,18 +297,9 @@
 
     class HarithFooter extends HTMLElement {
         static get observedAttributes() { return ['links', 'copyright-text']; }
-        
-        get links() {
-            try { return JSON.parse(this.getAttribute('links') || '[]'); } 
-            catch { return []; }
-        }
-
-        connectedCallback() {
-            this.render();
-        }
-        
+        get links() { try { return JSON.parse(this.getAttribute('links') || '[]'); } catch { return []; } }
+        connectedCallback() { this.render(); }
         attributeChangedCallback() { this.render(); }
-
         render() {
             const year = new Date().getFullYear();
             const text = this.getAttribute('copyright-text') || 'Harith Kavish';
@@ -327,20 +326,17 @@
     // Legacy Fallback
     window.HarithShell = {
         renderHeader: (opts) => {
-            const target = typeof opts.target === 'string' ? document.querySelector(opts.target) : opts.target;
-            if(!target) return;
             const el = document.createElement('harith-header');
             if(opts.brand && opts.brand.title) el.setAttribute('site-title', opts.brand.title);
             if(opts.navLinks) el.setAttribute('nav-links', JSON.stringify(opts.navLinks));
-            target.appendChild(el);
+            const target = typeof opts.target === 'string' ? document.querySelector(opts.target) : opts.target;
+            target && target.appendChild(el);
         },
         renderFooter: (opts) => {
-             const target = typeof opts.target === 'string' ? document.querySelector(opts.target) : opts.target;
-             if(!target) return;
              const el = document.createElement('harith-footer');
              if(opts.links) el.setAttribute('links', JSON.stringify(opts.links));
-             target.appendChild(el);
+             const target = typeof opts.target === 'string' ? document.querySelector(opts.target) : opts.target;
+             target && target.appendChild(el);
         }
     };
-
 })();
